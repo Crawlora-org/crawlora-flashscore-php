@@ -1,28 +1,41 @@
 {
   "platform": "flashscore",
-  "operationCount": 38,
+  "operationCount": 54,
   "operationIds": [
     "flashscore-calendar",
     "flashscore-calendar-categories",
     "flashscore-competitions",
+    "flashscore-entity-news",
+    "flashscore-match-box-score",
+    "flashscore-match-darts",
     "flashscore-match-h2h",
     "flashscore-match-highlights",
     "flashscore-match-info",
     "flashscore-match-lineups",
     "flashscore-match-missing-players",
+    "flashscore-match-momentum",
     "flashscore-match-news",
     "flashscore-match-odds",
+    "flashscore-match-player-stats",
+    "flashscore-match-point-by-point",
     "flashscore-match-predicted-lineups",
+    "flashscore-match-report",
     "flashscore-match-standings",
     "flashscore-match-stats",
     "flashscore-match-tv",
     "flashscore-navigation",
     "flashscore-news",
     "flashscore-news-article",
+    "flashscore-news-article-body",
     "flashscore-news-categories",
+    "flashscore-news-most-read",
     "flashscore-odds-geos",
     "flashscore-player",
+    "flashscore-player-fixtures",
     "flashscore-player-injuries",
+    "flashscore-player-match-log",
+    "flashscore-player-news",
+    "flashscore-player-results",
     "flashscore-player-transfers",
     "flashscore-ranking-categories",
     "flashscore-rankings",
@@ -32,11 +45,14 @@
     "flashscore-team",
     "flashscore-team-fixtures",
     "flashscore-team-news",
+    "flashscore-team-outright-odds",
     "flashscore-team-results",
     "flashscore-team-squad",
     "flashscore-team-transfers",
     "flashscore-top-search",
+    "flashscore-tournament-archive-seasons",
     "flashscore-tournament-events",
+    "flashscore-tournament-outright-odds",
     "flashscore-tournament-seasons",
     "flashscore-tournament-standings",
     "flashscore-tournament-standings-views"
@@ -45,24 +61,37 @@
     "calendar": "flashscore-calendar",
     "calendar_categories": "flashscore-calendar-categories",
     "competitions": "flashscore-competitions",
+    "entity_news": "flashscore-entity-news",
+    "match_box_score": "flashscore-match-box-score",
+    "match_darts": "flashscore-match-darts",
     "match_h2h": "flashscore-match-h2h",
     "match_highlights": "flashscore-match-highlights",
     "match_info": "flashscore-match-info",
     "match_lineups": "flashscore-match-lineups",
     "match_missing_players": "flashscore-match-missing-players",
+    "match_momentum": "flashscore-match-momentum",
     "match_news": "flashscore-match-news",
     "match_odds": "flashscore-match-odds",
+    "match_player_stats": "flashscore-match-player-stats",
+    "match_point_by_point": "flashscore-match-point-by-point",
     "match_predicted_lineups": "flashscore-match-predicted-lineups",
+    "match_report": "flashscore-match-report",
     "match_standings": "flashscore-match-standings",
     "match_stats": "flashscore-match-stats",
     "match_tv": "flashscore-match-tv",
     "navigation": "flashscore-navigation",
     "news": "flashscore-news",
     "news_article": "flashscore-news-article",
+    "news_article_body": "flashscore-news-article-body",
     "news_categories": "flashscore-news-categories",
+    "news_most_read": "flashscore-news-most-read",
     "odds_geos": "flashscore-odds-geos",
     "player": "flashscore-player",
+    "player_fixtures": "flashscore-player-fixtures",
     "player_injuries": "flashscore-player-injuries",
+    "player_match_log": "flashscore-player-match-log",
+    "player_news": "flashscore-player-news",
+    "player_results": "flashscore-player-results",
     "player_transfers": "flashscore-player-transfers",
     "ranking_categories": "flashscore-ranking-categories",
     "rankings": "flashscore-rankings",
@@ -72,11 +101,14 @@
     "team": "flashscore-team",
     "team_fixtures": "flashscore-team-fixtures",
     "team_news": "flashscore-team-news",
+    "team_outright_odds": "flashscore-team-outright-odds",
     "team_results": "flashscore-team-results",
     "team_squad": "flashscore-team-squad",
     "team_transfers": "flashscore-team-transfers",
     "top_search": "flashscore-top-search",
+    "tournament_archive_seasons": "flashscore-tournament-archive-seasons",
     "tournament_events": "flashscore-tournament-events",
+    "tournament_outright_odds": "flashscore-tournament-outright-odds",
     "tournament_seasons": "flashscore-tournament-seasons",
     "tournament_standings": "flashscore-tournament-standings",
     "tournament_standings_views": "flashscore-tournament-standings-views"
@@ -188,7 +220,12 @@
             "table-tennis",
             "volleyball",
             "water-polo",
-            "winter-sports"
+            "winter-sports",
+            "moto-racing",
+            "ski-jumping",
+            "alpine-skiing",
+            "cross-country-skiing",
+            "biathlon"
           ]
         },
         {
@@ -235,7 +272,12 @@
             "table-tennis",
             "volleyball",
             "water-polo",
-            "winter-sports"
+            "winter-sports",
+            "moto-racing",
+            "ski-jumping",
+            "alpine-skiing",
+            "cross-country-skiing",
+            "biathlon"
           ],
           "in": "query",
           "name": "sport",
@@ -251,6 +293,122 @@
           "name": "day_offset",
           "type": "integer",
           "x-example": 0
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-entity-news": {
+      "id": "flashscore-entity-news",
+      "method": "GET",
+      "path": "/flashscore/entity-news",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "type",
+          "in": "query",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "team",
+            "player",
+            "tournament",
+            "sport"
+          ]
+        },
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "params": [
+        {
+          "description": "Entity type",
+          "enum": [
+            "team",
+            "player",
+            "tournament",
+            "sport"
+          ],
+          "in": "query",
+          "name": "type",
+          "required": true,
+          "type": "string",
+          "x-example": "player"
+        },
+        {
+          "description": "Eight-character entity id: team or player id, tournament template id, or a SPORT entity id from flashscore-news-categories",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "UmV9iQmE"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-match-box-score": {
+      "id": "flashscore-match-box-score",
+      "method": "GET",
+      "path": "/flashscore/match-box-score",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore match id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "KzoOQu6j"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-match-darts": {
+      "id": "flashscore-match-darts",
+      "method": "GET",
+      "path": "/flashscore/match-darts",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore match id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "KMrRR6R1"
         }
       ],
       "produces": [
@@ -401,6 +559,36 @@
           "required": true,
           "type": "string",
           "x-example": "f75igXFG"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-match-momentum": {
+      "id": "flashscore-match-momentum",
+      "method": "GET",
+      "path": "/flashscore/match-momentum",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore football match id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "j52jHsN8"
         }
       ],
       "produces": [
@@ -946,6 +1134,108 @@
         "ApiKeyAuth"
       ]
     },
+    "flashscore-match-player-stats": {
+      "id": "flashscore-match-player-stats",
+      "method": "GET",
+      "path": "/flashscore/match-player-stats",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "player_id",
+          "in": "query",
+          "type": "string"
+        },
+        {
+          "name": "group",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "top_stats",
+            "shots",
+            "attack",
+            "passes",
+            "defense",
+            "goalkeeping",
+            "general"
+          ]
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore football match id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "j52jHsN8"
+        },
+        {
+          "description": "Eight-character Flashscore player id from this match; returns only that player",
+          "in": "query",
+          "name": "player_id",
+          "type": "string",
+          "x-example": "trpxfbO3"
+        },
+        {
+          "description": "Optional statistic group",
+          "enum": [
+            "top_stats",
+            "shots",
+            "attack",
+            "passes",
+            "defense",
+            "goalkeeping",
+            "general"
+          ],
+          "in": "query",
+          "name": "group",
+          "type": "string",
+          "x-example": "shots"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-match-point-by-point": {
+      "id": "flashscore-match-point-by-point",
+      "method": "GET",
+      "path": "/flashscore/match-point-by-point",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore match id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "8v653Rz9"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
     "flashscore-match-predicted-lineups": {
       "id": "flashscore-match-predicted-lineups",
       "method": "GET",
@@ -967,6 +1257,36 @@
           "required": true,
           "type": "string",
           "x-example": "f75igXFG"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-match-report": {
+      "id": "flashscore-match-report",
+      "method": "GET",
+      "path": "/flashscore/match-report",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore match id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "j52jHsN8"
         }
       ],
       "produces": [
@@ -1546,10 +1866,54 @@
         "ApiKeyAuth"
       ]
     },
+    "flashscore-news-article-body": {
+      "id": "flashscore-news-article-body",
+      "method": "GET",
+      "path": "/flashscore/news-article-body",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore news article id from a news listing, flashscore-entity-news or flashscore-news-most-read",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "xlKVMkEO"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
     "flashscore-news-categories": {
       "id": "flashscore-news-categories",
       "method": "GET",
       "path": "/flashscore/news-categories",
+      "pathParams": [],
+      "queryParams": [],
+      "params": [],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-news-most-read": {
+      "id": "flashscore-news-most-read",
+      "method": "GET",
+      "path": "/flashscore/news-most-read",
       "pathParams": [],
       "queryParams": [],
       "params": [],
@@ -1616,6 +1980,50 @@
         "ApiKeyAuth"
       ]
     },
+    "flashscore-player-fixtures": {
+      "id": "flashscore-player-fixtures",
+      "method": "GET",
+      "path": "/flashscore/player-fixtures",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "type": "integer"
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore player id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "0K04jl1m"
+        },
+        {
+          "description": "1-based page from 1 to 300; defaults to 1",
+          "in": "query",
+          "maximum": 300,
+          "minimum": 1,
+          "name": "page",
+          "type": "integer",
+          "x-example": 1
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
     "flashscore-player-injuries": {
       "id": "flashscore-player-injuries",
       "method": "GET",
@@ -1649,6 +2057,124 @@
           "name": "slug",
           "type": "string",
           "x-example": "haaland-erling"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-player-match-log": {
+      "id": "flashscore-player-match-log",
+      "method": "GET",
+      "path": "/flashscore/player-match-log",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "type": "integer"
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore player id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "UmV9iQmE"
+        },
+        {
+          "description": "1-based page from 1 to 300; defaults to 1",
+          "in": "query",
+          "maximum": 300,
+          "minimum": 1,
+          "name": "page",
+          "type": "integer",
+          "x-example": 1
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-player-news": {
+      "id": "flashscore-player-news",
+      "method": "GET",
+      "path": "/flashscore/player-news",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore player id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "UmV9iQmE"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-player-results": {
+      "id": "flashscore-player-results",
+      "method": "GET",
+      "path": "/flashscore/player-results",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "type": "integer"
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore player id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "M5Nr6FTR"
+        },
+        {
+          "description": "1-based page from 1 to 300; defaults to 1",
+          "in": "query",
+          "maximum": 300,
+          "minimum": 1,
+          "name": "page",
+          "type": "integer",
+          "x-example": 1
         }
       ],
       "produces": [
@@ -1864,7 +2390,12 @@
             "table-tennis",
             "volleyball",
             "water-polo",
-            "winter-sports"
+            "winter-sports",
+            "moto-racing",
+            "ski-jumping",
+            "alpine-skiing",
+            "cross-country-skiing",
+            "biathlon"
           ]
         },
         {
@@ -1911,7 +2442,12 @@
             "table-tennis",
             "volleyball",
             "water-polo",
-            "winter-sports"
+            "winter-sports",
+            "moto-racing",
+            "ski-jumping",
+            "alpine-skiing",
+            "cross-country-skiing",
+            "biathlon"
           ],
           "in": "query",
           "name": "sport",
@@ -2077,6 +2613,432 @@
           "required": true,
           "type": "string",
           "x-example": "Wtn9Stg0"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-team-outright-odds": {
+      "id": "flashscore-team-outright-odds",
+      "method": "GET",
+      "path": "/flashscore/team-outright-odds",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "geo",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "AE",
+            "AL",
+            "AM",
+            "AO",
+            "AR",
+            "AT",
+            "AU",
+            "AZ",
+            "BA",
+            "BD",
+            "BE",
+            "BG",
+            "BO",
+            "BR",
+            "BY",
+            "CA",
+            "CH",
+            "CI",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CR",
+            "CY",
+            "CZ",
+            "DE",
+            "DK",
+            "DO",
+            "DZ",
+            "EC",
+            "EE",
+            "EG",
+            "ES",
+            "ET",
+            "FI",
+            "FR",
+            "GB",
+            "GE",
+            "GH",
+            "GR",
+            "GT",
+            "HK",
+            "HN",
+            "HR",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IN",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KR",
+            "KW",
+            "KZ",
+            "LA",
+            "LB",
+            "LK",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MD",
+            "ME",
+            "MK",
+            "MM",
+            "MN",
+            "MT",
+            "MX",
+            "MY",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NZ",
+            "PA",
+            "PE",
+            "PH",
+            "PK",
+            "PL",
+            "PT",
+            "PY",
+            "QA",
+            "RO",
+            "RS",
+            "RU",
+            "SA",
+            "SD",
+            "SE",
+            "SG",
+            "SI",
+            "SK",
+            "SN",
+            "SV",
+            "TH",
+            "TN",
+            "TR",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "US",
+            "UY",
+            "UZ",
+            "VE",
+            "VN",
+            "XK",
+            "ZA",
+            "ZM",
+            "ZW"
+          ]
+        },
+        {
+          "name": "subdivision",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "AB",
+            "AK",
+            "AL",
+            "AR",
+            "AZ",
+            "BC",
+            "CA",
+            "CO",
+            "CT",
+            "DC",
+            "DE",
+            "FL",
+            "GA",
+            "HI",
+            "IA",
+            "ID",
+            "IL",
+            "IN",
+            "KS",
+            "KY",
+            "LA",
+            "MA",
+            "MB",
+            "MD",
+            "ME",
+            "MI",
+            "MN",
+            "MO",
+            "MS",
+            "MT",
+            "NB",
+            "NC",
+            "ND",
+            "NE",
+            "NH",
+            "NJ",
+            "NL",
+            "NM",
+            "NS",
+            "NT",
+            "NU",
+            "NV",
+            "NY",
+            "OH",
+            "OK",
+            "ON",
+            "OR",
+            "PA",
+            "PE",
+            "QC",
+            "RI",
+            "SC",
+            "SD",
+            "SK",
+            "TN",
+            "TX",
+            "UT",
+            "VA",
+            "VT",
+            "WA",
+            "WI",
+            "WV",
+            "WY",
+            "YT"
+          ]
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character Flashscore team id",
+          "in": "query",
+          "name": "id",
+          "required": true,
+          "type": "string",
+          "x-example": "Wtn9Stg0"
+        },
+        {
+          "description": "Viewer market country code from flashscore-odds-geos; defaults to GB",
+          "enum": [
+            "AE",
+            "AL",
+            "AM",
+            "AO",
+            "AR",
+            "AT",
+            "AU",
+            "AZ",
+            "BA",
+            "BD",
+            "BE",
+            "BG",
+            "BO",
+            "BR",
+            "BY",
+            "CA",
+            "CH",
+            "CI",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CR",
+            "CY",
+            "CZ",
+            "DE",
+            "DK",
+            "DO",
+            "DZ",
+            "EC",
+            "EE",
+            "EG",
+            "ES",
+            "ET",
+            "FI",
+            "FR",
+            "GB",
+            "GE",
+            "GH",
+            "GR",
+            "GT",
+            "HK",
+            "HN",
+            "HR",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IN",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KR",
+            "KW",
+            "KZ",
+            "LA",
+            "LB",
+            "LK",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MD",
+            "ME",
+            "MK",
+            "MM",
+            "MN",
+            "MT",
+            "MX",
+            "MY",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NZ",
+            "PA",
+            "PE",
+            "PH",
+            "PK",
+            "PL",
+            "PT",
+            "PY",
+            "QA",
+            "RO",
+            "RS",
+            "RU",
+            "SA",
+            "SD",
+            "SE",
+            "SG",
+            "SI",
+            "SK",
+            "SN",
+            "SV",
+            "TH",
+            "TN",
+            "TR",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "US",
+            "UY",
+            "UZ",
+            "VE",
+            "VN",
+            "XK",
+            "ZA",
+            "ZM",
+            "ZW"
+          ],
+          "in": "query",
+          "name": "geo",
+          "type": "string",
+          "x-example": "GB"
+        },
+        {
+          "description": "US state (with geo US) or Canadian province (with geo CA) code from flashscore-odds-geos; rejected with any other geo",
+          "enum": [
+            "AB",
+            "AK",
+            "AL",
+            "AR",
+            "AZ",
+            "BC",
+            "CA",
+            "CO",
+            "CT",
+            "DC",
+            "DE",
+            "FL",
+            "GA",
+            "HI",
+            "IA",
+            "ID",
+            "IL",
+            "IN",
+            "KS",
+            "KY",
+            "LA",
+            "MA",
+            "MB",
+            "MD",
+            "ME",
+            "MI",
+            "MN",
+            "MO",
+            "MS",
+            "MT",
+            "NB",
+            "NC",
+            "ND",
+            "NE",
+            "NH",
+            "NJ",
+            "NL",
+            "NM",
+            "NS",
+            "NT",
+            "NU",
+            "NV",
+            "NY",
+            "OH",
+            "OK",
+            "ON",
+            "OR",
+            "PA",
+            "PE",
+            "QC",
+            "RI",
+            "SC",
+            "SD",
+            "SK",
+            "TN",
+            "TX",
+            "UT",
+            "VA",
+            "VT",
+            "WA",
+            "WI",
+            "WV",
+            "WY",
+            "YT"
+          ],
+          "in": "query",
+          "name": "subdivision",
+          "type": "string",
+          "x-example": "NJ"
         }
       ],
       "produces": [
@@ -2264,6 +3226,36 @@
         "ApiKeyAuth"
       ]
     },
+    "flashscore-tournament-archive-seasons": {
+      "id": "flashscore-tournament-archive-seasons",
+      "method": "GET",
+      "path": "/flashscore/tournament-archive-seasons",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "stage_id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character tournament stage id (tournament_stage_id of an event competition block)",
+          "in": "query",
+          "name": "stage_id",
+          "required": true,
+          "type": "string",
+          "x-example": "CfoA8Dmm"
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
     "flashscore-tournament-events": {
       "id": "flashscore-tournament-events",
       "method": "GET",
@@ -2299,6 +3291,432 @@
           "name": "page",
           "type": "integer",
           "x-example": 1
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "security": [
+        "ApiKeyAuth"
+      ]
+    },
+    "flashscore-tournament-outright-odds": {
+      "id": "flashscore-tournament-outright-odds",
+      "method": "GET",
+      "path": "/flashscore/tournament-outright-odds",
+      "pathParams": [],
+      "queryParams": [
+        {
+          "name": "tournament_id",
+          "in": "query",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "geo",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "AE",
+            "AL",
+            "AM",
+            "AO",
+            "AR",
+            "AT",
+            "AU",
+            "AZ",
+            "BA",
+            "BD",
+            "BE",
+            "BG",
+            "BO",
+            "BR",
+            "BY",
+            "CA",
+            "CH",
+            "CI",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CR",
+            "CY",
+            "CZ",
+            "DE",
+            "DK",
+            "DO",
+            "DZ",
+            "EC",
+            "EE",
+            "EG",
+            "ES",
+            "ET",
+            "FI",
+            "FR",
+            "GB",
+            "GE",
+            "GH",
+            "GR",
+            "GT",
+            "HK",
+            "HN",
+            "HR",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IN",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KR",
+            "KW",
+            "KZ",
+            "LA",
+            "LB",
+            "LK",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MD",
+            "ME",
+            "MK",
+            "MM",
+            "MN",
+            "MT",
+            "MX",
+            "MY",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NZ",
+            "PA",
+            "PE",
+            "PH",
+            "PK",
+            "PL",
+            "PT",
+            "PY",
+            "QA",
+            "RO",
+            "RS",
+            "RU",
+            "SA",
+            "SD",
+            "SE",
+            "SG",
+            "SI",
+            "SK",
+            "SN",
+            "SV",
+            "TH",
+            "TN",
+            "TR",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "US",
+            "UY",
+            "UZ",
+            "VE",
+            "VN",
+            "XK",
+            "ZA",
+            "ZM",
+            "ZW"
+          ]
+        },
+        {
+          "name": "subdivision",
+          "in": "query",
+          "type": "string",
+          "enum": [
+            "AB",
+            "AK",
+            "AL",
+            "AR",
+            "AZ",
+            "BC",
+            "CA",
+            "CO",
+            "CT",
+            "DC",
+            "DE",
+            "FL",
+            "GA",
+            "HI",
+            "IA",
+            "ID",
+            "IL",
+            "IN",
+            "KS",
+            "KY",
+            "LA",
+            "MA",
+            "MB",
+            "MD",
+            "ME",
+            "MI",
+            "MN",
+            "MO",
+            "MS",
+            "MT",
+            "NB",
+            "NC",
+            "ND",
+            "NE",
+            "NH",
+            "NJ",
+            "NL",
+            "NM",
+            "NS",
+            "NT",
+            "NU",
+            "NV",
+            "NY",
+            "OH",
+            "OK",
+            "ON",
+            "OR",
+            "PA",
+            "PE",
+            "QC",
+            "RI",
+            "SC",
+            "SD",
+            "SK",
+            "TN",
+            "TX",
+            "UT",
+            "VA",
+            "VT",
+            "WA",
+            "WI",
+            "WV",
+            "WY",
+            "YT"
+          ]
+        }
+      ],
+      "params": [
+        {
+          "description": "Eight-character season-level tournament id (tournament_id of an event competition block or of a season)",
+          "in": "query",
+          "name": "tournament_id",
+          "required": true,
+          "type": "string",
+          "x-example": "SY30SsKF"
+        },
+        {
+          "description": "Viewer market country code from flashscore-odds-geos; defaults to GB",
+          "enum": [
+            "AE",
+            "AL",
+            "AM",
+            "AO",
+            "AR",
+            "AT",
+            "AU",
+            "AZ",
+            "BA",
+            "BD",
+            "BE",
+            "BG",
+            "BO",
+            "BR",
+            "BY",
+            "CA",
+            "CH",
+            "CI",
+            "CL",
+            "CM",
+            "CN",
+            "CO",
+            "CR",
+            "CY",
+            "CZ",
+            "DE",
+            "DK",
+            "DO",
+            "DZ",
+            "EC",
+            "EE",
+            "EG",
+            "ES",
+            "ET",
+            "FI",
+            "FR",
+            "GB",
+            "GE",
+            "GH",
+            "GR",
+            "GT",
+            "HK",
+            "HN",
+            "HR",
+            "HU",
+            "ID",
+            "IE",
+            "IL",
+            "IN",
+            "IQ",
+            "IR",
+            "IS",
+            "IT",
+            "JO",
+            "JP",
+            "KE",
+            "KG",
+            "KH",
+            "KR",
+            "KW",
+            "KZ",
+            "LA",
+            "LB",
+            "LK",
+            "LT",
+            "LU",
+            "LV",
+            "LY",
+            "MA",
+            "MD",
+            "ME",
+            "MK",
+            "MM",
+            "MN",
+            "MT",
+            "MX",
+            "MY",
+            "NG",
+            "NI",
+            "NL",
+            "NO",
+            "NP",
+            "NZ",
+            "PA",
+            "PE",
+            "PH",
+            "PK",
+            "PL",
+            "PT",
+            "PY",
+            "QA",
+            "RO",
+            "RS",
+            "RU",
+            "SA",
+            "SD",
+            "SE",
+            "SG",
+            "SI",
+            "SK",
+            "SN",
+            "SV",
+            "TH",
+            "TN",
+            "TR",
+            "TW",
+            "TZ",
+            "UA",
+            "UG",
+            "US",
+            "UY",
+            "UZ",
+            "VE",
+            "VN",
+            "XK",
+            "ZA",
+            "ZM",
+            "ZW"
+          ],
+          "in": "query",
+          "name": "geo",
+          "type": "string",
+          "x-example": "GB"
+        },
+        {
+          "description": "US state (with geo US) or Canadian province (with geo CA) code from flashscore-odds-geos; rejected with any other geo",
+          "enum": [
+            "AB",
+            "AK",
+            "AL",
+            "AR",
+            "AZ",
+            "BC",
+            "CA",
+            "CO",
+            "CT",
+            "DC",
+            "DE",
+            "FL",
+            "GA",
+            "HI",
+            "IA",
+            "ID",
+            "IL",
+            "IN",
+            "KS",
+            "KY",
+            "LA",
+            "MA",
+            "MB",
+            "MD",
+            "ME",
+            "MI",
+            "MN",
+            "MO",
+            "MS",
+            "MT",
+            "NB",
+            "NC",
+            "ND",
+            "NE",
+            "NH",
+            "NJ",
+            "NL",
+            "NM",
+            "NS",
+            "NT",
+            "NU",
+            "NV",
+            "NY",
+            "OH",
+            "OK",
+            "ON",
+            "OR",
+            "PA",
+            "PE",
+            "QC",
+            "RI",
+            "SC",
+            "SD",
+            "SK",
+            "TN",
+            "TX",
+            "UT",
+            "VA",
+            "VT",
+            "WA",
+            "WI",
+            "WV",
+            "WY",
+            "YT"
+          ],
+          "in": "query",
+          "name": "subdivision",
+          "type": "string",
+          "x-example": "NJ"
         }
       ],
       "produces": [
