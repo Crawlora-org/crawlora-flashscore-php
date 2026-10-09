@@ -26,7 +26,7 @@ final class Client
     private ?\Closure $transport;
 
     public const PLATFORM = 'flashscore';
-    public const VERSION = '0.3.2';
+    public const VERSION = '0.3.3';
     public const OPERATION_COUNT = 54;
     public const OPERATION_IDS = ["flashscore-calendar", "flashscore-calendar-categories", "flashscore-competitions", "flashscore-entity-news", "flashscore-match-box-score", "flashscore-match-darts", "flashscore-match-h2h", "flashscore-match-highlights", "flashscore-match-info", "flashscore-match-lineups", "flashscore-match-missing-players", "flashscore-match-momentum", "flashscore-match-news", "flashscore-match-odds", "flashscore-match-player-stats", "flashscore-match-point-by-point", "flashscore-match-predicted-lineups", "flashscore-match-report", "flashscore-match-standings", "flashscore-match-stats", "flashscore-match-tv", "flashscore-navigation", "flashscore-news", "flashscore-news-article", "flashscore-news-article-body", "flashscore-news-categories", "flashscore-news-most-read", "flashscore-odds-geos", "flashscore-player", "flashscore-player-fixtures", "flashscore-player-injuries", "flashscore-player-match-log", "flashscore-player-news", "flashscore-player-results", "flashscore-player-transfers", "flashscore-ranking-categories", "flashscore-rankings", "flashscore-scores", "flashscore-search", "flashscore-sports", "flashscore-team", "flashscore-team-fixtures", "flashscore-team-news", "flashscore-team-outright-odds", "flashscore-team-results", "flashscore-team-squad", "flashscore-team-transfers", "flashscore-top-search", "flashscore-tournament-archive-seasons", "flashscore-tournament-events", "flashscore-tournament-outright-odds", "flashscore-tournament-seasons", "flashscore-tournament-standings", "flashscore-tournament-standings-views"];
 
@@ -56,7 +56,7 @@ JSON, true, 512, JSON_THROW_ON_ERROR);
         $url = $this->buildUrl($operation, $params);
         $headers = [
             'x-api-key: ' . $this->apiKey,
-            'User-Agent: crawlora-flashscore-php/0.3.2',
+            'User-Agent: crawlora-flashscore-php/0.3.3',
             'Accept: ' . (in_array('text/plain', $operation['produces'], true) ? 'application/json, text/plain' : 'application/json'),
         ];
         try {
